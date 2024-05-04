@@ -4,11 +4,7 @@ try :
 except :
     os.system('pip install flask')
     from flask import Flask ,render_template ,request ,redirect
-try :
-    from PIL import Image
-except :
-    os.system('pip install Pillow')
-    from PIL import Image
+
 
 def refresh():
     os.system('sleep .3')
