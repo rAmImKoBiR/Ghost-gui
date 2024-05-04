@@ -106,5 +106,9 @@ def button():
         keyevent(3)
     elif text =='recent':
         keyevent(187)
+    elif text =='swipeup':
+        os.system('adb shell swipe 300 500 300 300')
+        refresh()
+
     return redirect('/')
 app.run(host='0.0.0.0',debug=False, port=5001)
