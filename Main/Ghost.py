@@ -89,7 +89,7 @@ def button():
     elif text =='recent':
         keyevent(187)
     elif text =='swipeup':
-        os.system('adb shell input swipe 300 500 300 300')
+        os.system('adb shell input swipe 300 700 300 300')
         refresh()
 
     return redirect('/')
