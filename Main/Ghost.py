@@ -55,24 +55,6 @@ def clicked():
     return redirect('/')
 
 
-
-@app.route('/swipe', methods=['GET'])
-def swipe():
-    
-    x1 = request.args.get('x1')
-    
-    y1 = request.args.get('y1')
-    x2 = request.args.get('x2')
-    
-    y2 = request.args.get('y2')
-    os.system( 'adb shell input swipe '+str(x1)+' '+str(y1)+' '+str(x2)+' '+str(y2))
-    refresh()
-    return redirect('/')
-
-
-
-
-
 @app.route('/text', methods=['GET'])
 def text():
     text = request.args.get('text')
@@ -107,7 +89,7 @@ def button():
     elif text =='recent':
         keyevent(187)
     elif text =='swipeup':
-        os.system('adb shell swipe 300 500 300 300')
+        os.system('adb shell input swipe 300 500 300 300')
         refresh()
 
     return redirect('/')
