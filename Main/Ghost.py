@@ -20,12 +20,14 @@ def keyevent(integer):
     refresh()
 
 def get_image_size():
-    adb_command = "adb shell wm size"
-    result = os.popen(adb_command).read().strip()
-    size_str = result.split('Physical size: ')[1].strip()
-    width, height = map(int, size_str.split('x'))
-    return height, width 
-
+    try :
+        adb_command = "adb shell wm size"
+        result = os.popen(adb_command).read().strip()
+        size_str = result.split('Physical size: ')[1].strip()
+        width, height = map(int, size_str.split('x'))
+        return height, width 
+    except :
+        return 500,500
 
 app=Flask(__name__)
 @app.route('/') 
@@ -51,6 +53,25 @@ def clicked():
     os.system('adb shell input tap '+str(x)+' '+str(y))
     refresh()
     return redirect('/')
+
+
+
+@app.route('/swipe', methods=['GET'])
+def swipe():
+    
+    x1 = request.args.get('x1')
+    
+    y1 = request.args.get('y1')
+    x2 = request.args.get('x2')
+    
+    y2 = request.args.get('y2')
+    os.system( 'adb shell input swipe '+str(x1)+' '+str(y1)+' '+str(x2)+' '+str(y2))
+    refresh()
+    return redirect('/')
+
+
+
+
 
 @app.route('/text', methods=['GET'])
 def text():
