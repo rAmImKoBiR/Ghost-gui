@@ -47,7 +47,6 @@ def clicked():
     y = request.args.get('y')
     print(x,y)
     os.system('adb shell input tap '+str(x)+' '+str(y))
-    refresh()
     return redirect('/')
 
 
