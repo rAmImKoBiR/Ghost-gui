@@ -13,16 +13,18 @@ except :
 def refresh():
     os.system('sleep .3')
     os.system('adb shell screencap -p /sdcard/screen.png')
-    os.system('adb pull /sdcard/screen.png ./')
+    os.system('adb pull /sdcard/screen.png ./static/')
 
 def keyevent(integer):
     os.system('adb shell input keyevent '+str(integer))
     refresh()
 
 def get_image_size():
-    with Image.open('screen.png') as img:
-        width, height = img.size
-        return height,width
+    adb_command = "adb shell wm size"
+    result = os.popen(adb_command).read().strip()
+    size_str = result.split('Physical size: ')[1].strip()
+    width, height = map(int, size_str.split('x'))
+    return height, width 
 
 
 app=Flask(__name__)
@@ -41,8 +43,11 @@ def submit():
 
 @app.route('/clicked', methods=['GET'])
 def clicked():
+    
     x = request.args.get('x')
+    
     y = request.args.get('y')
+    print(x,y)
     os.system('adb shell input tap '+str(x)+' '+str(y))
     refresh()
     return redirect('/')
@@ -81,4 +86,4 @@ def button():
     elif text =='recent':
         keyevent(187)
     return redirect('/')
-app.run(host='0.0.0.0',debug=False)
+app.run(host='0.0.0.0',debug=False, port=5001)
