@@ -140,6 +140,7 @@
         <button name="btn" value="backspace">Backspace</button>
         <button name="btn" value="home">Home</button>
         <button name="btn" value="recent">Recent</button>
+        <button name="btn" value="swipeup">Swipeup</button>
 
       </form>
 
@@ -173,43 +174,6 @@
             xhr.send();
         }
     </script>
-
-<h1>   _______Swipe option here_______ </h1>
-<div class="container" id="container" onclick="handleClick(event)">
-    <img src="static/screen.png" id="125" style="max-width: 100%; max-height: 100%;">
-</div>
-
-<script>
-    let clickCount = 0;
-    let x1, y1, x2, y2;
-
-    function handleClick(event) {
-        if (clickCount === 0) {
-            x1 = event.clientX;
-            y1 = event.clientY;
-            clickCount++;
-        } else if (clickCount === 1) {
-            x2 = event.clientX;
-            y2 = event.clientY;
-            sendCoordinates();
-            clickCount = 0;
-        }
-    }
-
-    function sendCoordinates() {
-        const url = `/swipe?x1=${x1}&y1=${y1}&x2=${x2}&y2=${y2}`;
-        fetch(url)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                console.log('Coordinates sent successfully');
-            })
-            .catch(error => {
-                console.error('There was a problem sending coordinates:', error);
-            });
-    }
-</script>
 
 
 </body>
