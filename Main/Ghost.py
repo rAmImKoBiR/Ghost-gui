@@ -5,7 +5,8 @@ except :
     os.system('pip install flask')
     from flask import Flask ,render_template ,request ,redirect
 
-
+height=0
+width=0 
 def refresh():
     os.system('sleep .3')
     os.system('adb shell screencap -p /sdcard/screen.png')
@@ -16,15 +17,19 @@ def keyevent(integer):
     refresh()
 
 def get_image_size():
-    try :
-        adb_command = "adb shell wm size"
-        result = os.popen(adb_command).read().strip()
-        size_str = result.split('Physical size: ')[1].strip()
-        width, height = map(int, size_str.split('x'))
-        return height, width 
-    except :
-        return 500,500
-
+    global height 
+    global width
+    if (height==0 and width==0) or ( height==513 and width ==513 ) :
+        try :
+            adb_command = "adb shell wm size"
+            result = os.popen(adb_command).read().strip()
+            size_str = result.split('Physical size: ')[1].strip()
+            width, height = map(int, size_str.split('x'))
+            return height, width 
+        except :
+            return 513,513
+    else:
+        return height,width
 app=Flask(__name__)
 @app.route('/') 
 def index():
@@ -33,8 +38,12 @@ def index():
 
 @app.route('/submit', methods=['GET'])
 def submit():
+    global height
+    global width
     text = request.args.get('text')
     os.system('adb disconnect ')
+    height=0
+    width=0
     os.system('adb connect '+text)
     refresh()
     return redirect('/')
