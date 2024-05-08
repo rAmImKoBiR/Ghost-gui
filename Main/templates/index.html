@@ -160,10 +160,11 @@
             var size = [container.clientHeight * 2, container.clientWidth * 4]; // Calculate size
             var x = (event.clientX - container.offsetLeft)*2; // Calculate x-coordinate relative to container
             var y = (event.clientY - container.offsetTop)*2; // Calculate y-coordinate relative to container
-            var queryString = "/clicked?x=" + x + "&y=" + y; // Construct query string
+            var queryString = "/clicked?x=" + x + "&y=" + y; 
+            
     
-            // Send GET request to server
             var xhr = new XMLHttpRequest();
+            setTimeout(() => {document.getElementById('rfs').click();}, 2000);
             xhr.open("GET", queryString, true);
             xhr.onreadystatechange = function () {
                 if (xhr.readyState === 4 && xhr.status === 200) {
